@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login , logout , authenticate  # django inbuilt operation that return true or false 
 from django.contrib.auth.decorators import login_required # returns true or false -> gives permission to usage of view actions based
 # off user login activies  # decorators : functions return other functions 
-from django.contrib import messages # to relay notifications
+from django.contrib import messages
 from django.contrib.auth.views  import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
 from .forms import UserRegistrationForm,UserLoginForm,UserProfileForm
@@ -24,7 +24,7 @@ def register_view(request):
     else:
         form = UserRegistrationForm() # default http method here is GET 
         
-    return render(request, 'accounts/register.html' , {'form' , form})
+    return render(request, 'accounts/register.html' , {'form' : form})
 
 def login_view(request):
     # validate if the user is already authenticated 
@@ -32,23 +32,25 @@ def login_view(request):
         return redirect('media_assets:dashboard')
     
     if request.method  == 'POST': # user wants to register 
-        form  = UserLoginForm(request.POST)
+        form  = UserLoginForm(request, data=request.POST)
         # if user has filled in all required inputs 
         if form.is_valid():
             # pick up entries for username and password 
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             # djangomethod authenticate to authenticate and login my user 
-            user = authenticate(username,password) # queries db looking for the user with metnioned credntiials 
+            user = authenticate(request, username=username, password=password) # queries db looking for the user with metnioned credntiials 
             # is the user found not in db 
             if user is not None:
                 login(request,user)
                 messages.success(request, f'Welcome back {username}')
                 return redirect('media_assets:dashboard')
     else:
-        form = UserLoginForm() # default http method here is GET 
+        form = UserLoginForm(request) # default http method here is GET 
         
-    return render(request, 'accounts/login.html' , {'form' , form})
+    return render(request, 'accounts/login.html' , {'form': form})
+
+
 
 
 ## logout -> check if our user is logged in - @Login_required

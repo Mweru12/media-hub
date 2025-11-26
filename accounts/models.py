@@ -5,7 +5,7 @@ from django.db import models
 class User(AbstractUser):
     # define our roles
     USER_TYPE_CHOICE = (
-        ('student', 'Student')
+        ('student', 'Student'),
         ('teacher', 'Teacher')
         # these are roles that i want extended to my AbstractUser which is the model existing from django
     )
