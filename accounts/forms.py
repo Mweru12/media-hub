@@ -5,7 +5,7 @@ from .models import User
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs= { 'class':'form-control',
                                                                       'placeholder':'Email'}))
-    user_type = forms.ChoiceField(choices=User.USER_TYPE_CHOICE, widget=forms.Select(attrs={
+    user_type = forms.ChoiceField(choices=User.USER_TYPE_CHOICES, widget=forms.Select(attrs={
         'class' : 'form-control'
     }))
     

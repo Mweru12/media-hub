@@ -70,9 +70,11 @@ def profile_view(request):
             form.save()
             messages.success(request, f"Profile saved successfully")
             return redirect('accounts:profile')
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
         form = UserProfileForm(instance=request.user)
-        
+
     return render(request, 'accounts/profile.html' , {'form' : form})
 
 class CustomPasswordResetView(PasswordResetView):

@@ -90,6 +90,11 @@ def edit_media_view(request,pk):
     else:
         form = MediaAssetForm(instance=media)
 
+    return render(request, 'media_assets/edit_media.html', {
+        'form': form,
+        'media': media
+    })
+
 
 @login_required
 def delete_media_view(request,pk):
