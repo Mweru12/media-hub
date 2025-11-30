@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "accounts",
     "media_assets",
     "cloudinary",
+    "mediampesa",
 ]
 
 # register our custom user model 
